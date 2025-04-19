@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.IconButtonDefaults
@@ -37,6 +39,7 @@ fun DetailsBottomBar(
     modifier: Modifier = Modifier,
     onDownloadClicked: () -> Unit,
     onBookmarkClicked: () -> Unit,
+    onActionClicked: () -> Unit,
     isBookmark: Boolean
 ) {
     Row(
@@ -82,6 +85,18 @@ fun DetailsBottomBar(
             targetValue = if (isBookmark) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.secondary,
             animationSpec = tween(durationMillis = 1000), label = ""
         )
+        IconButton(
+            modifier = Modifier.size(48.dp),
+            colors = IconButtonDefaults.iconButtonColors(containerColor = color),
+            onClick = {
+                onActionClicked()
+            }) {
+            Icon(
+                imageVector = Icons.Default.Share,
+                contentDescription = null
+            )
+        }
+
         IconButton(
             modifier = Modifier.size(48.dp),
             colors = IconButtonDefaults.iconButtonColors(containerColor = color),

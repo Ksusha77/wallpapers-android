@@ -1,5 +1,7 @@
 package com.kseniya.wallpapers.presentation.details
 
+import android.content.Context
+import android.content.Intent
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
@@ -15,19 +17,21 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import coil.compose.AsyncImage
+import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
+import com.google.accompanist.permissions.rememberPermissionState
+import com.kseniya.wallpapers.R
 import com.kseniya.wallpapers.core.util.Container
 import com.kseniya.wallpapers.presentation.details.components.DetailsBottomBar
 import com.kseniya.wallpapers.presentation.details.components.DetailsTopBar
 import com.kseniya.wallpapers.presentation.details.components.NotFoundStub
-import com.google.accompanist.permissions.ExperimentalPermissionsApi
-import com.google.accompanist.permissions.isGranted
-import com.google.accompanist.permissions.rememberPermissionState
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -37,6 +41,7 @@ fun DetailsScreen(
     viewModel: DetailsViewModel = hiltViewModel()
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val context = LocalContext.current
 
     val permissionState =
         rememberPermissionState(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
@@ -80,6 +85,9 @@ fun DetailsScreen(
                     },
                     onBookmarkClicked = {
                         viewModel.onEvent(DetailsScreenEvent.OnBookmarkClicked)
+                    },
+                    onActionClicked = {
+                        shareImageLink(context = context, imageUrl = state.src)
                     }
                 )
             }
@@ -125,4 +133,13 @@ fun DetailsScreen(
             }
         }
     }
+}
+
+fun shareImageLink(context: Context, imageUrl: String) {
+    val intent = Intent(Intent.ACTION_SEND).apply {
+        this.type = "text/plain"
+        putExtra(Intent.EXTRA_TEXT, imageUrl)
+    }
+
+    context.startActivity(Intent.createChooser(intent, context.getString(R.string.share_image_via)))
 }
