@@ -34,12 +34,6 @@ class MainActivity : ComponentActivity() {
             val viewModel: ThemeViewModel = hiltViewModel()
             val isDark by viewModel.isDark.collectAsState()
 
-            LaunchedEffect(Unit) {
-                viewModel.isDark.collect { value ->
-                    println("!!! Flow emitted: $value")
-                }
-            }
-
             AppTheme(darkTheme = isDark) {
                 Surface(
                     color = MaterialTheme.colorScheme.background
