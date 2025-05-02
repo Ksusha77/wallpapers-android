@@ -8,7 +8,9 @@ import com.kseniya.wallpapers.data.datasource.remote.PexelsApiService
 import com.kseniya.wallpapers.data.downloader.AndroidDownloader
 import com.kseniya.wallpapers.data.downloader.Downloader
 import com.kseniya.wallpapers.data.repository.ImageRepositoryImpl
+import com.kseniya.wallpapers.data.repository.ThemeRepositoryImpl
 import com.kseniya.wallpapers.domain.repository.ImageRepository
+import com.kseniya.wallpapers.domain.repository.ThemeRepository
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -57,6 +59,11 @@ abstract class DataModule {
     abstract fun bindMovieRepository(
         repository: ImageRepositoryImpl
     ): ImageRepository
+
+    @Binds
+    abstract fun bindThemeRepository(
+        repository: ThemeRepositoryImpl
+    ): ThemeRepository
 
     @Binds
     @Singleton

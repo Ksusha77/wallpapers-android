@@ -1,6 +1,9 @@
 package com.kseniya.wallpapers.presentation.bookmarks.components
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -18,6 +21,8 @@ import com.kseniya.wallpapers.R
 @Composable
 fun BookmarksTopBar(
     modifier: Modifier = Modifier,
+    isDark: Boolean,
+    toggleTheme: () -> Unit,
 ) {
     Box(
         modifier = modifier
@@ -31,5 +36,14 @@ fun BookmarksTopBar(
             style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.onBackground
         )
+
+        Text(
+            text = if (isDark) "Dark" else "Light",
+            modifier = Modifier
+                .align(Alignment.CenterEnd)
+                .clickable { toggleTheme() }
+                .padding(end = 16.dp),
+            style = MaterialTheme.typography.bodyMedium,
+            color = MaterialTheme.colorScheme.primary)
     }
 }

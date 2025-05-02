@@ -87,7 +87,7 @@ fun DetailsBottomBar(
         )
         IconButton(
             modifier = Modifier.size(48.dp),
-            colors = IconButtonDefaults.iconButtonColors(containerColor = color),
+            colors = IconButtonDefaults.iconButtonColors(containerColor = MaterialTheme.colorScheme.secondary),
             onClick = {
                 onActionClicked()
             }) {

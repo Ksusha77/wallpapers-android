@@ -16,10 +16,12 @@ import androidx.navigation.compose.rememberNavController
 import com.kseniya.wallpapers.core.navigation.components.AppBottomBar
 import com.kseniya.wallpapers.core.navigation.components.AppNavigationRail
 import com.kseniya.wallpapers.core.navigation.graphs.NavigationBarNavGraph
+import com.kseniya.wallpapers.presentation.ThemeViewModel
 
 @Composable
 fun NavigationScreen(
     navController: NavHostController = rememberNavController(),
+    themeViewModel: ThemeViewModel,
     rootNavController: NavHostController,
     windowSize: WindowSizeClass
 ) {
@@ -32,18 +34,20 @@ fun NavigationScreen(
     when (windowSize.widthSizeClass) {
         WindowWidthSizeClass.Compact -> {
             AppNavigationPortrait(
+                themeViewModel,
                 navController,
                 rootNavController,
                 currentDestination,
                 screens,
                 elementOnClick = { route ->
                     elementOnClick(route = route, navController = navController)
-                }
+                },
             )
         }
 
         else -> {
             AppNavigationLandscape(
+                themeViewModel,
                 navController,
                 rootNavController,
                 currentDestination,
@@ -65,6 +69,7 @@ fun elementOnClick(route: String, navController: NavHostController) {
 
 @Composable
 fun AppNavigationLandscape(
+    themeViewModel: ThemeViewModel,
     navController: NavHostController,
     rootNavController: NavHostController,
     currentDestination: NavDestination?,
@@ -77,12 +82,17 @@ fun AppNavigationLandscape(
             screens = screens,
             elementOnClick = elementOnClick
         )
-        NavigationBarNavGraph(navController = navController, rootNavController = rootNavController)
+        NavigationBarNavGraph(
+            navController = navController,
+            rootNavController = rootNavController,
+            themeViewModel = themeViewModel,
+        )
     }
 }
 
 @Composable
 fun AppNavigationPortrait(
+    themeViewModel: ThemeViewModel,
     navController: NavHostController,
     rootNavController: NavHostController,
     currentDestination: NavDestination?,
@@ -101,7 +111,8 @@ fun AppNavigationPortrait(
         NavigationBarNavGraph(
             navController = navController,
             rootNavController = rootNavController,
-            modifier = Modifier.padding(bottom = it.calculateBottomPadding())
+            modifier = Modifier.padding(bottom = it.calculateBottomPadding()),
+            themeViewModel = themeViewModel,
         )
     }
 }

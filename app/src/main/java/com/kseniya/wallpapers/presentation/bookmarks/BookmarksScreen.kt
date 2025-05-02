@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import com.kseniya.wallpapers.core.navigation.graphs.Graph
 import com.kseniya.wallpapers.core.util.Container
+import com.kseniya.wallpapers.presentation.ThemeViewModel
 import com.kseniya.wallpapers.presentation.bookmarks.components.BookmarksGrid
 import com.kseniya.wallpapers.presentation.bookmarks.components.BookmarksTopBar
 import com.kseniya.wallpapers.presentation.bookmarks.components.NoBookmarksStub
@@ -23,9 +24,11 @@ import com.kseniya.wallpapers.presentation.bookmarks.components.NoBookmarksStub
 fun BookmarksScreen(
     modifier: Modifier = Modifier,
     navController: NavController,
-    viewModel: BookmarksViewModel = hiltViewModel()
+    themeViewModel: ThemeViewModel,
+    viewModel: BookmarksViewModel = hiltViewModel(),
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
+    val isDark by themeViewModel.isDark.collectAsStateWithLifecycle()
 
     Container(viewModel.actionFlow) { action ->
         when (action) {
@@ -46,7 +49,10 @@ fun BookmarksScreen(
     Scaffold(
         modifier = modifier,
         topBar = {
-            BookmarksTopBar()
+            BookmarksTopBar(
+                isDark = isDark,
+                toggleTheme = themeViewModel::toggleTheme,
+            )
         }
     ) { padding ->
         Column(modifier = Modifier.padding(top = padding.calculateTopPadding())) {

@@ -11,6 +11,7 @@ import com.kseniya.wallpapers.core.navigation.navanimations.intoLeftAnimation
 import com.kseniya.wallpapers.core.navigation.navanimations.intoRightAnimation
 import com.kseniya.wallpapers.core.navigation.navanimations.outLeftAnimation
 import com.kseniya.wallpapers.core.navigation.navanimations.outRightAnimation
+import com.kseniya.wallpapers.presentation.ThemeViewModel
 import com.kseniya.wallpapers.presentation.bookmarks.BookmarksScreen
 import com.kseniya.wallpapers.presentation.home.HomeScreen
 
@@ -18,6 +19,7 @@ import com.kseniya.wallpapers.presentation.home.HomeScreen
 @Composable
 fun NavigationBarNavGraph(
     modifier: Modifier = Modifier,
+    themeViewModel: ThemeViewModel,
     navController: NavHostController,
     rootNavController: NavHostController
 ) {
@@ -83,7 +85,8 @@ fun NavigationBarNavGraph(
         ) {
             BookmarksScreen(
                 modifier = modifier,
-                navController = rootNavController
+                navController = rootNavController,
+                themeViewModel = themeViewModel,
             )
         }
     }

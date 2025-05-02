@@ -13,18 +13,27 @@ import com.kseniya.wallpapers.core.navigation.graphs.Graph.IS_IMAGE_BOOKMARK
 import com.kseniya.wallpapers.core.navigation.graphs.Graph.IS_IMAGE_CURATED_PARAM
 import com.kseniya.wallpapers.core.navigation.navanimations.scaleInAnimation
 import com.kseniya.wallpapers.core.navigation.navanimations.scaleOutAnimation
+import com.kseniya.wallpapers.presentation.ThemeViewModel
 import com.kseniya.wallpapers.presentation.details.DetailsScreen
 
 
 @Composable
-fun RootNavigationGraph(navController: NavHostController, windowSize: WindowSizeClass) {
+fun RootNavigationGraph(
+    navController: NavHostController,
+    windowSize: WindowSizeClass,
+    themeViewModel: ThemeViewModel
+) {
     NavHost(
         navController = navController,
         route = Graph.ROOT,
         startDestination = Graph.NAVIGATION_BAR_ROUTE
     ) {
         composable(route = Graph.NAVIGATION_BAR_ROUTE) {
-            NavigationScreen(windowSize = windowSize, rootNavController = navController)
+            NavigationScreen(
+                windowSize = windowSize,
+                rootNavController = navController,
+                themeViewModel = themeViewModel
+            )
         }
         composable(
             route = Graph.DETAILS_ROUTE + "?${IMAGE_ID_PARAM}={$IMAGE_ID_PARAM}&${IS_IMAGE_CURATED_PARAM}={$IS_IMAGE_CURATED_PARAM}&${IS_IMAGE_BOOKMARK}={$IS_IMAGE_BOOKMARK}",
